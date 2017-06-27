@@ -6,6 +6,7 @@
 /[Ww]indowsStoreApp
 /UWP
 /HoloLensapp
+/App
 /Assets/AssetStoreTools*
 
 # Visual Studio 2015 cache directory
