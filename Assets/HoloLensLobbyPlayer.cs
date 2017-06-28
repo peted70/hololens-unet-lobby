@@ -45,7 +45,8 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
 
     private void SetupLocalPlayer()
     {
-        //throw new NotImplementedException();
+        if (playerColor == Color.white)
+            CmdColorChange();
     }
 
     public override void OnClientReady(bool readyState)
