@@ -12,12 +12,19 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
     static List<int> _colorInUse = new List<int>();
 
     public TextMesh statusText;
+    public TextMesh nameText;
 
     //OnMyName function will be invoked on clients when server change the value of playerName
     [SyncVar(hook = "OnMyName")]
     public string playerName = "";
     [SyncVar(hook = "OnMyColor")]
     public Color playerColor = Color.white;
+
+    public override void OnStartAuthority()
+    {
+        base.OnStartAuthority();
+        SetupLocalPlayer();
+    }
 
     public override void OnClientEnterLobby()
     {
@@ -47,6 +54,8 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
     {
         if (playerColor == Color.white)
             CmdColorChange();
+        if (playerName == "")
+            CmdNameChanged("Player" + this.netId.ToString());
     }
 
     public override void OnClientReady(bool readyState)
@@ -58,7 +67,7 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
     public void OnMyName(string newName)
     {
         playerName = newName;
-        //nameInput.text = playerName;
+        nameText.text = playerName;
     }
 
     public void OnMyColor(Color newColor)
@@ -121,6 +130,4 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
     {
         playerName = name;
     }
-
-
 }
