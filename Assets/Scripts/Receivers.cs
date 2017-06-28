@@ -31,7 +31,8 @@ public class Receivers : InteractionReceiver
             case "ClientButton":
                 {
                     var trgt = Targets[0].GetComponent<CustomLobbyManager>();
-                    trgt.StartClient();
+                    trgt.networkAddress = "192.168.0.10"; //ipInput.text;
+                    var nc = trgt.StartClient();
                     break;
                 }
         }

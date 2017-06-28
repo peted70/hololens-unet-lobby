@@ -329,7 +329,6 @@ GameObject:
   - component: {fileID: 33928154209098214}
   - component: {fileID: 23798575913797652}
   - component: {fileID: 95099763136818398}
-  - component: {fileID: 114043540249675396}
   m_Layer: 0
   m_Name: hololens-lobby-player
   m_TagString: Untagged
@@ -1414,38 +1413,6 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
---- !u!114 &114043540249675396
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1914671494246914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 62
-    i1: 242
-    i2: 175
-    i3: 234
-    i4: 7
-    i5: 224
-    i6: 13
-    i7: 212
-    i8: 154
-    i9: 28
-    i10: 3
-    i11: 66
-    i12: 189
-    i13: 90
-    i14: 27
-    i15: 107
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!114 &114074359592787064
 MonoBehaviour:
   m_ObjectHideFlags: 1

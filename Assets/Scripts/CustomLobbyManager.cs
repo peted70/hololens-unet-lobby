@@ -43,9 +43,15 @@ public class CustomLobbyManager : NetworkLobbyManager
         return lobbyPlayer;
     }
 
+    public override void OnLobbyClientConnect(NetworkConnection conn)
+    {
+        base.OnLobbyClientConnect(conn);
+    }
+
     public override void OnLobbyStartClient(NetworkClient lobbyClient)
     {
-        SwitchToPlayerVIew();
+        base.OnLobbyStartClient(lobbyClient);
+        //SwitchToPlayerVIew();
     }
 
     // Use this for initialization
