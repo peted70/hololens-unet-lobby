@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HUX.Collections;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,18 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
     public TextMesh statusText;
     public TextMesh nameText;
 
+    public ObjectCollection playerCollection;
+
     //OnMyName function will be invoked on clients when server change the value of playerName
     [SyncVar(hook = "OnMyName")]
     public string playerName = "";
     [SyncVar(hook = "OnMyColor")]
     public Color playerColor = Color.white;
+
+    public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+    }
 
     public override void OnStartAuthority()
     {
@@ -29,6 +37,17 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
     public override void OnClientEnterLobby()
     {
         base.OnClientEnterLobby();
+
+        PlayerList.instance.AddPlayer(this);
+
+        //var lobbyPlayer = this;
+
+        //// Need to clone the lobby player prefab here at this point..
+        //var cn = new ObjectCollection.CollectionNode();
+        //cn.transform = lobbyPlayer.transform;
+        //lobbyPlayer.transform.parent = playerCollection.transform;
+        //playerCollection.NodeList.Add(cn);
+        //playerCollection.UpdateCollection();
 
         if (isLocalPlayer)
         {

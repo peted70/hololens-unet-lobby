@@ -1,17 +1,25 @@
-﻿using HUX.Collections;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class CustomLobbyManager : NetworkLobbyManager
 {
-    public ObjectCollection playerCollection;
+    public void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+        runInBackground = true;
+    }
 
     public override void OnStartHost()
     {
         base.OnStartHost();
         SwitchToPlayerVIew();
+    }
+
+    public override void OnStartClient(NetworkClient lobbyClient)
+    {
+        base.OnStartClient(lobbyClient);
     }
 
     private void SwitchToPlayerVIew()
@@ -21,6 +29,16 @@ public class CustomLobbyManager : NetworkLobbyManager
         go.SetActive(false);
         var po = transform.Find("PlayersView").gameObject;
         po.SetActive(true);
+    }
+
+    public override void OnClientConnect(NetworkConnection conn)
+    {
+        base.OnClientConnect(conn);
+    }
+
+    public override void OnLobbyClientConnect(NetworkConnection conn)
+    {
+        base.OnLobbyClientConnect(conn);
     }
 
     private void SwitchToMainVIew()
@@ -35,34 +53,16 @@ public class CustomLobbyManager : NetworkLobbyManager
     public override GameObject OnLobbyServerCreateLobbyPlayer(NetworkConnection conn, short playerControllerId)
     {
         GameObject lobbyPlayer = Instantiate(lobbyPlayerPrefab.gameObject) as GameObject;
-
-        var cn = new ObjectCollection.CollectionNode();
-        cn.transform = lobbyPlayer.transform;
-        playerCollection.NodeList.Add(cn);
-        playerCollection.UpdateCollection();
         return lobbyPlayer;
     }
 
-    public override void OnLobbyClientConnect(NetworkConnection conn)
-    {
-        base.OnLobbyClientConnect(conn);
-    }
+    //public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
+    //{
+    //    base.OnServerAddPlayer(conn, playerControllerId);
+    //}
 
-    public override void OnLobbyStartClient(NetworkClient lobbyClient)
+    public override void OnServerError(NetworkConnection conn, int errorCode)
     {
-        base.OnLobbyStartClient(lobbyClient);
-        //SwitchToPlayerVIew();
+        base.OnServerError(conn, errorCode);
     }
-
-    // Use this for initialization
-    void Start ()
-    {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
 }

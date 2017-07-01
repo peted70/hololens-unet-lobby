@@ -1740,6 +1740,7 @@ MonoBehaviour:
   ShowLobbyGUI: 0
   statusText: {fileID: 102947350507454026}
   nameText: {fileID: 102545972596427752}
+  playerCollection: {fileID: 0}
   playerName: 
   playerColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &114617758846272866

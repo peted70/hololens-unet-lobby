@@ -25,14 +25,19 @@ public class Receivers : InteractionReceiver
                 {
                     // Not sure this is the best way to do this.. seems wrong.. 
                     var trgt = Targets[0].GetComponent<CustomLobbyManager>();
-                    trgt.StartHost();
+                    var nc = trgt.StartHost();
+                    Debug.Log("server ip = " + nc.serverIp);
+                    Debug.Log("server port = " + nc.serverPort);
                     break;
                 }
             case "ClientButton":
                 {
                     var trgt = Targets[0].GetComponent<CustomLobbyManager>();
-                    trgt.networkAddress = "192.168.0.10"; //ipInput.text;
+                    trgt.networkAddress = "192.168.137.116";// "192.168.0.10"; //ipInput.text;
+                    trgt.networkPort = 7777;
+
                     var nc = trgt.StartClient();
+                    trgt.IsClientConnected();
                     break;
                 }
         }
