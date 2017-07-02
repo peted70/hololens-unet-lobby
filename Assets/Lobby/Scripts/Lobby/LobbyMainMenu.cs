@@ -7,7 +7,7 @@ namespace Prototype.NetworkLobby
     //Main menu, mainly only a bunch of callback called by the UI (setup throught the Inspector)
     public class LobbyMainMenu : MonoBehaviour 
     {
-        public LobbyManager lobbyManager;
+        public HoloLensLobbyManager lobbyManager;
 
         public RectTransform lobbyServerList;
         public RectTransform lobbyPanel;

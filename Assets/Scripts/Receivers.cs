@@ -24,7 +24,7 @@ public class Receivers : InteractionReceiver
             case "HostButton":
                 {
                     // Not sure this is the best way to do this.. seems wrong.. 
-                    var trgt = Targets[0].GetComponent<CustomLobbyManager>();
+                    var trgt = Targets[0].GetComponent<HoloLensLobbyManager>();
                     var nc = trgt.StartHost();
                     Debug.Log("server ip = " + nc.serverIp);
                     Debug.Log("server port = " + nc.serverPort);
@@ -32,8 +32,8 @@ public class Receivers : InteractionReceiver
                 }
             case "ClientButton":
                 {
-                    var trgt = Targets[0].GetComponent<CustomLobbyManager>();
-                    trgt.networkAddress = "192.168.137.116";// "192.168.0.10"; //ipInput.text;
+                    var trgt = Targets[0].GetComponent<HoloLensLobbyManager>();
+                    trgt.networkAddress = "192.168.0.10";// "192.168.0.10"; //ipInput.text;
                     trgt.networkPort = 7777;
 
                     var nc = trgt.StartClient();

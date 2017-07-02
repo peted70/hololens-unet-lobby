@@ -9,7 +9,7 @@ namespace Prototype.NetworkLobby
 {
     public class LobbyServerList : MonoBehaviour
     {
-        public LobbyManager lobbyManager;
+        public HoloLensLobbyManager lobbyManager;
 
         public RectTransform serverListRect;
         public GameObject serverEntryPrefab;

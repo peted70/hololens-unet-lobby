@@ -23,46 +23,46 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
     [SyncVar(hook = "OnMyColor")]
     public Color playerColor = Color.white;
 
-    public override void OnStartLocalPlayer()
-    {
-        base.OnStartLocalPlayer();
-    }
+    //public override void OnStartLocalPlayer()
+    //{
+    //    base.OnStartLocalPlayer();
+    //}
 
-    public override void OnStartAuthority()
-    {
-        base.OnStartAuthority();
-        SetupLocalPlayer();
-    }
+    //public override void OnStartAuthority()
+    //{
+    //    base.OnStartAuthority();
+    //    SetupLocalPlayer();
+    //}
 
-    public override void OnClientEnterLobby()
-    {
-        base.OnClientEnterLobby();
+    //public override void OnClientEnterLobby()
+    //{
+    //    base.OnClientEnterLobby();
 
-        PlayerList.instance.AddPlayer(this);
+    //    PlayerList.instance.AddPlayer(this);
 
-        //var lobbyPlayer = this;
+    //    //var lobbyPlayer = this;
 
-        //// Need to clone the lobby player prefab here at this point..
-        //var cn = new ObjectCollection.CollectionNode();
-        //cn.transform = lobbyPlayer.transform;
-        //lobbyPlayer.transform.parent = playerCollection.transform;
-        //playerCollection.NodeList.Add(cn);
-        //playerCollection.UpdateCollection();
+    //    //// Need to clone the lobby player prefab here at this point..
+    //    //var cn = new ObjectCollection.CollectionNode();
+    //    //cn.transform = lobbyPlayer.transform;
+    //    //lobbyPlayer.transform.parent = playerCollection.transform;
+    //    //playerCollection.NodeList.Add(cn);
+    //    //playerCollection.UpdateCollection();
 
-        if (isLocalPlayer)
-        {
-            SetupLocalPlayer();
-        }
-        else
-        {
-            SetupOtherPlayer();
-        }
+    //    if (isLocalPlayer)
+    //    {
+    //        SetupLocalPlayer();
+    //    }
+    //    else
+    //    {
+    //        SetupOtherPlayer();
+    //    }
 
-        // setup the player data on UI. The value are SyncVar so the player
-        // will be created with the right value currently on server
-        OnMyName(playerName);
-        OnMyColor(playerColor);
-    }
+    //    // setup the player data on UI. The value are SyncVar so the player
+    //    // will be created with the right value currently on server
+    //    OnMyName(playerName);
+    //    OnMyColor(playerColor);
+    //}
 
     private void SetupOtherPlayer()
     {
@@ -77,11 +77,11 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
             CmdNameChanged("Player" + this.netId.ToString());
     }
 
-    public override void OnClientReady(bool readyState)
-    {
-        base.OnClientReady(readyState);
-        statusText.text = readyState ? "Ready" : "Not Ready";
-    }
+    //public override void OnClientReady(bool readyState)
+    //{
+    //    base.OnClientReady(readyState);
+    //    statusText.text = readyState ? "Ready" : "Not Ready";
+    //}
 
     public void OnMyName(string newName)
     {
@@ -148,5 +148,12 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
     public void CmdNameChanged(string name)
     {
         playerName = name;
+    }
+
+    [ClientRpc]
+    public void RpcUpdateCountdown(int countdown)
+    {
+        HoloLensLobbyManager.s_Singleton.countdownPanel.UIText.text = "Match Starting in " + countdown;
+        HoloLensLobbyManager.s_Singleton.countdownPanel.gameObject.SetActive(countdown != 0);
     }
 }

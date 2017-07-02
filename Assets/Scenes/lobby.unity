@@ -765,6 +765,11 @@ MonoBehaviour:
   RequireGaze: 1
   MainCollider: {fileID: 0}
   MainRenderer: {fileID: 924408305}
+--- !u!20 &1292025588 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 2062044, guid: 2effafb42a9bcdd4aafef7457b6efe67,
+    type: 2}
+  m_PrefabInternal: {fileID: 990131630}
 --- !u!1 &1298244848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,19 +1007,19 @@ Prefab:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
+    - target: {fileID: 0}
       propertyPath: m_OfflineScene
       value: lobby
       objectReference: {fileID: 0}
-    - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
+    - target: {fileID: 0}
       propertyPath: m_LobbyScene
       value: lobby
       objectReference: {fileID: 0}
-    - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
+    - target: {fileID: 0}
       propertyPath: m_PlayScene
       value: game
       objectReference: {fileID: 0}
-    - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
+    - target: {fileID: 0}
       propertyPath: m_GamePlayerPrefab
       value: 
       objectReference: {fileID: 1385009059752968, guid: 543fc4d1f899d0440b362048a8e2dc55,
@@ -1038,7 +1043,7 @@ Prefab:
     - target: {fileID: 22312876, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1292025588}
     - target: {fileID: 11422868, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
       propertyPath: m_DynamicPixelsPerUnit
       value: 10
@@ -1099,9 +1104,68 @@ Prefab:
       propertyPath: m_AnchoredPosition.x
       value: -960.00006
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 11438560, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
+      propertyPath: lobbyManager
+      value: 
+      objectReference: {fileID: 1497129174}
+    - target: {fileID: 11478224, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
+      propertyPath: lobbyManager
+      value: 
+      objectReference: {fileID: 1497129174}
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1434477638 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11403930, guid: c0978251ff7b10d4fb954a4b56acd9f0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1434477637}
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+--- !u!114 &1434477639 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11415712, guid: c0978251ff7b10d4fb954a4b56acd9f0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1434477637}
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+--- !u!114 &1434477640 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11477488, guid: c0978251ff7b10d4fb954a4b56acd9f0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1434477637}
+  m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+--- !u!1 &1434477641 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 161020, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
+  m_PrefabInternal: {fileID: 1434477637}
+--- !u!114 &1434477642 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11413810, guid: c0978251ff7b10d4fb954a4b56acd9f0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1434477637}
+  m_Script: {fileID: 11500000, guid: ccb58ed657934fa4dacaa6afdf48bffc, type: 3}
+--- !u!114 &1434477643 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11442006, guid: c0978251ff7b10d4fb954a4b56acd9f0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1434477637}
+  m_Script: {fileID: 11500000, guid: 1d17c9f1a79cf43479d9ac49a7e77a12, type: 3}
+--- !u!224 &1434477644 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 22443498, guid: c0978251ff7b10d4fb954a4b56acd9f0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1434477637}
+--- !u!224 &1434477645 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 22442386, guid: c0978251ff7b10d4fb954a4b56acd9f0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1434477637}
+--- !u!114 &1434477646 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11424994, guid: c0978251ff7b10d4fb954a4b56acd9f0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1434477637}
+  m_Script: {fileID: 11500000, guid: 763992d85d3f6d4428454c2a968ce084, type: 3}
 --- !u!1 &1497129170
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,7 +1175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1497129171}
   - component: {fileID: 1497129172}
-  - component: {fileID: 1497129173}
+  - component: {fileID: 1497129174}
   m_Layer: 0
   m_Name: CustomLobby
   m_TagString: Untagged
@@ -1153,7 +1217,7 @@ MonoBehaviour:
   bLockFocus: 0
   TextObjectState: {fileID: 0}
   txt: {fileID: 0}
---- !u!114 &1497129173
+--- !u!114 &1497129174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1161,13 +1225,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1497129170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab71b8709c43e5048a93200d37be5554, type: 3}
+  m_Script: {fileID: 11500000, guid: 18550fe893b5dd948bf3947129da2876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_NetworkPort: 7777
   m_ServerBindToIP: 0
   m_ServerBindAddress: 
-  m_NetworkAddress: localhost
+  m_NetworkAddress: 192.168.0.10
   m_DontDestroyOnLoad: 1
   m_RunInBackground: 1
   m_ScriptCRCCheck: 1
@@ -1221,7 +1285,7 @@ MonoBehaviour:
     m_MaxTimerTimeout: 12000
     m_MinNetSimulatorTimeout: 1
     m_MaxNetSimulatorTimeout: 12000
-  m_Channels: 0500000000000000
+  m_Channels: 
   m_UseWebSockets: 0
   m_UseSimulator: 0
   m_SimulatedLatency: 1
@@ -1235,8 +1299,8 @@ MonoBehaviour:
   isNetworkActive: 0
   matchMaker: {fileID: 0}
   m_ShowLobbyGUI: 0
-  m_MaxPlayers: 4
-  m_MaxPlayersPerConnection: 4
+  m_MaxPlayers: 3
+  m_MaxPlayersPerConnection: 2
   m_MinPlayers: 2
   m_LobbyPlayerPrefab: {fileID: 114581304217523308, guid: 3ef2afea07e00dd49a1c0342bd5a1b6b,
     type: 2}
@@ -1245,6 +1309,18 @@ MonoBehaviour:
   m_LobbyScene: lobby
   m_PlayScene: game
   lobbySlots: []
+  prematchCountdown: 5
+  topPanel: {fileID: 1434477646}
+  mainMenuPanel: {fileID: 1434477645}
+  lobbyPanel: {fileID: 1434477644}
+  infoPanel: {fileID: 1434477643}
+  countdownPanel: {fileID: 1434477642}
+  addPlayerButton: {fileID: 1434477641}
+  backButton: {fileID: 1434477640}
+  statusInfo: {fileID: 1434477639}
+  hostInfo: {fileID: 1434477638}
+  _playerNumber: 0
+  _isMatchmaking: 0
 --- !u!1 &2024417581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,8 +1381,8 @@ MonoBehaviour:
   Rows: 1
   CellWidth: 0.5
   CellHeight: 0.5
-  SphereMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  CylinderMesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  SphereMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 3}
+  CylinderMesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 3}
 --- !u!1 &2132032894 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 155310, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
@@ -1356,6 +1432,110 @@ MonoBehaviour:
   m_Script: {fileID: 1898958984, guid: f7b54ff4a43d4fcf81b4538b678e0bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2132032898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2132032894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18550fe893b5dd948bf3947129da2876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NetworkPort: 7777
+  m_ServerBindToIP: 0
+  m_ServerBindAddress: 
+  m_NetworkAddress: 192.168.0.10
+  m_DontDestroyOnLoad: 1
+  m_RunInBackground: 1
+  m_ScriptCRCCheck: 1
+  m_MaxDelay: 0.01
+  m_LogLevel: 0
+  m_PlayerPrefab: {fileID: 0}
+  m_AutoCreatePlayer: 1
+  m_PlayerSpawnMethod: 0
+  m_OfflineScene: lobby
+  m_OnlineScene: 
+  m_SpawnPrefabs: []
+  m_CustomConfig: 0
+  m_MaxConnections: 4
+  m_ConnectionConfig:
+    m_PacketSize: 1440
+    m_FragmentSize: 500
+    m_ResendTimeout: 1200
+    m_DisconnectTimeout: 2000
+    m_ConnectTimeout: 2000
+    m_MinUpdateTimeout: 10
+    m_PingTimeout: 500
+    m_ReducedPingTimeout: 100
+    m_AllCostTimeout: 20
+    m_NetworkDropThreshold: 5
+    m_OverflowDropThreshold: 5
+    m_MaxConnectionAttempt: 10
+    m_AckDelay: 33
+    m_SendDelay: 10
+    m_MaxCombinedReliableMessageSize: 100
+    m_MaxCombinedReliableMessageCount: 10
+    m_MaxSentMessageQueueSize: 512
+    m_AcksType: 1
+    m_UsePlatformSpecificProtocols: 0
+    m_InitialBandwidth: 0
+    m_BandwidthPeakFactor: 2
+    m_WebSocketReceiveBufferMaxSize: 0
+    m_UdpSocketReceiveBufferMaxSize: 0
+    m_SSLCertFilePath: 
+    m_SSLPrivateKeyFilePath: 
+    m_SSLCAFilePath: 
+    m_Channels: []
+  m_GlobalConfig:
+    m_ThreadAwakeTimeout: 1
+    m_ReactorModel: 0
+    m_ReactorMaximumReceivedMessages: 1024
+    m_ReactorMaximumSentMessages: 1024
+    m_MaxPacketSize: 2000
+    m_MaxHosts: 16
+    m_ThreadPoolSize: 1
+    m_MinTimerTimeout: 1
+    m_MaxTimerTimeout: 12000
+    m_MinNetSimulatorTimeout: 1
+    m_MaxNetSimulatorTimeout: 12000
+  m_Channels: 
+  m_UseWebSockets: 0
+  m_UseSimulator: 0
+  m_SimulatedLatency: 1
+  m_PacketLossPercentage: 0
+  m_MaxBufferedPackets: 16
+  m_AllowFragmentation: 1
+  m_MatchHost: mm.unet.unity3d.com
+  m_MatchPort: 443
+  matchName: default
+  matchSize: 4
+  isNetworkActive: 0
+  matchMaker: {fileID: 0}
+  m_ShowLobbyGUI: 0
+  m_MaxPlayers: 3
+  m_MaxPlayersPerConnection: 2
+  m_MinPlayers: 2
+  m_LobbyPlayerPrefab: {fileID: 114581304217523308, guid: 3ef2afea07e00dd49a1c0342bd5a1b6b,
+    type: 2}
+  m_GamePlayerPrefab: {fileID: 1385009059752968, guid: 543fc4d1f899d0440b362048a8e2dc55,
+    type: 2}
+  m_LobbyScene: lobby
+  m_PlayScene: game
+  lobbySlots: []
+  prematchCountdown: 5
+  topPanel: {fileID: 1434477646}
+  mainMenuPanel: {fileID: 1434477645}
+  lobbyPanel: {fileID: 1434477644}
+  infoPanel: {fileID: 1434477643}
+  countdownPanel: {fileID: 1434477642}
+  addPlayerButton: {fileID: 1434477641}
+  backButton: {fileID: 1434477640}
+  statusInfo: {fileID: 1434477639}
+  hostInfo: {fileID: 1434477638}
+  _playerNumber: 0
+  _isMatchmaking: 0
 --- !u!224 &2132032900 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22459552, guid: c0978251ff7b10d4fb954a4b56acd9f0,
