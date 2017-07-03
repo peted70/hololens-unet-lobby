@@ -46,6 +46,26 @@ public class HoloLensLobbyManager : NetworkLobbyManager
 
     // ----------------- Server management
 
+    private void SwitchToMainVIew()
+    {
+        // When we have started ourself as a host we need to transition to the players view..
+        var go = transform.Find("PlayersView").gameObject;
+        go.SetActive(false);
+
+        var po = transform.Find("MainView").gameObject;
+        po.SetActive(true);
+    }
+
+    private void SwitchToPlayerVIew()
+    {
+        // When we have started ourself as a host we need to transition to the players view..
+        var go = transform.Find("MainView").gameObject;
+        go.SetActive(false);
+
+        var po = transform.Find("PlayersView").gameObject;
+        po.SetActive(true);
+    }
+
     public void AddLocalPlayer()
     {
         TryToAddPlayer();
@@ -100,6 +120,13 @@ public class HoloLensLobbyManager : NetworkLobbyManager
     public override void OnStartHost()
     {
         base.OnStartHost();
+        SwitchToPlayerVIew();
+    }
+
+    public override void OnLobbyClientEnter()
+    {
+        base.OnLobbyClientEnter();
+        SwitchToPlayerVIew();
     }
 
     public override void OnMatchCreate(bool success, string extendedInfo, MatchInfo matchInfo)
