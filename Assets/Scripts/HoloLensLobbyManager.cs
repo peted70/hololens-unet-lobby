@@ -165,8 +165,7 @@ public class HoloLensLobbyManager : NetworkLobbyManager
 
         HoloLensLobbyPlayer newPlayer = obj.GetComponent<HoloLensLobbyPlayer>();
 
-        newPlayer.transform.position = new Vector3(0 + playerControllerId * 10,
-            newPlayer.transform.position.y, newPlayer.transform.position.z);
+        PlayerList.instance.AddPlayer(newPlayer);
 
         return obj;
     }
