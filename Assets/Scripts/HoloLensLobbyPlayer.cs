@@ -28,11 +28,11 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
     //    base.OnStartLocalPlayer();
     //}
 
-    //public override void OnStartAuthority()
-    //{
-    //    base.OnStartAuthority();
-    //    SetupLocalPlayer();
-    //}
+    public override void OnStartAuthority()
+    {
+        base.OnStartAuthority();
+        SetupLocalPlayer();
+    }
 
     public override void OnClientEnterLobby()
     {
