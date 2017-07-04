@@ -16,8 +16,12 @@ public class PlayerList : ObjectCollection
     {
         // Need to clone the lobby player prefab here at this point..
         var cn = new ObjectCollection.CollectionNode();
+
+        // try not reparenting here as it causes a problem where when you switch scenes to the 
+        // game scene these get destroyed and recreated in an unexpected location in the hierarchy
+        //
         cn.transform = player.transform;
-        player.transform.parent = this.transform;
+        //player.transform.parent = this.transform;
         NodeList.Add(cn);
         UpdateCollection();
     }

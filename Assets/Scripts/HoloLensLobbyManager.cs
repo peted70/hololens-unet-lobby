@@ -8,6 +8,7 @@ using UnityEngine.Networking.Types;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 
 public class HoloLensLobbyManager : NetworkLobbyManager
 {
@@ -43,12 +44,23 @@ public class HoloLensLobbyManager : NetworkLobbyManager
         DontDestroyOnLoad(gameObject);
     }
 
-    //public override void OnLobbyClientSceneChanged(NetworkConnection conn)
-    //{
-    //}
+    public override void OnLobbyClientSceneChanged(NetworkConnection conn)
+    {
+        if (SceneManager.GetSceneAt(0).name != lobbyScene)
+        {
+            gameObject.SetActive(false);
 
-    // ----------------- Server management
+            // Also find any HoloLensLobbyPlayer objects and disable them..
+            var lobbyPlayers = FindObjectsOfType<HoloLensLobbyPlayer>();
+            foreach (var lobbyPlayer in lobbyPlayers)
+            {
+                lobbyPlayer.gameObject.SetActive(false);
+            }
+        }
+    }
 
+    
+        // ----------------- Server management
     private void SwitchToMainVIew()
     {
         // When we have started ourself as a host we need to transition to the players view..
@@ -201,6 +213,11 @@ public class HoloLensLobbyManager : NetworkLobbyManager
         return true;
     }
 
+    public override void OnLobbyServerSceneChanged(string sceneName)
+    {
+        base.OnLobbyServerSceneChanged(sceneName);
+    }
+
     // --- Countdown management
 
     public override void OnLobbyServerPlayersReady()
@@ -256,6 +273,36 @@ public class HoloLensLobbyManager : NetworkLobbyManager
         }
 
         ServerChangeScene(playScene);
+    }
+
+    public override void ServerChangeScene(string sceneName)
+    {
+        if (sceneName == this.lobbyScene)
+        {
+            foreach (var lobbyPlayer in lobbySlots)
+            {
+                if (lobbyPlayer == null)
+                    continue;
+
+                // find the game-player object for this connection, and destroy it
+                var uv = lobbyPlayer.GetComponent<NetworkIdentity>();
+
+                PlayerController playerController;
+                playerController = (PlayerController)uv.connectionToClient.playerControllers.Where(pc => pc.playerControllerId == uv.playerControllerId).Single();
+                if (playerController != null)
+                {
+                    NetworkServer.Destroy(playerController.gameObject);
+                }
+
+                if (NetworkServer.active)
+                {
+                    // re-add the lobby object
+                    lobbyPlayer.GetComponent<NetworkLobbyPlayer>().readyToBegin = false;
+                    NetworkServer.ReplacePlayerForConnection(uv.connectionToClient, lobbyPlayer.gameObject, uv.playerControllerId);
+                }
+            }
+        }
+        base.ServerChangeScene(sceneName);
     }
 
     // ----------------- Client callbacks ------------------

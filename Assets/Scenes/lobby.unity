@@ -150,17 +150,17 @@ Prefab:
     - target: {fileID: 114767677357354552, guid: 5e7e61ad52d568d4ca087afa39bfc076,
         type: 2}
       propertyPath: Radius
-      value: 1.5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114767677357354552, guid: 5e7e61ad52d568d4ca087afa39bfc076,
         type: 2}
       propertyPath: CellWidth
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114767677357354552, guid: 5e7e61ad52d568d4ca087afa39bfc076,
         type: 2}
       propertyPath: CellHeight
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114693553706264962, guid: 5e7e61ad52d568d4ca087afa39bfc076,
         type: 2}
