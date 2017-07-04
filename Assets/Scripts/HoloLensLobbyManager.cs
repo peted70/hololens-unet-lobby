@@ -7,6 +7,7 @@ using UnityEngine.Networking.Match;
 using UnityEngine.Networking.Types;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class HoloLensLobbyManager : NetworkLobbyManager
 {
@@ -32,6 +33,8 @@ public class HoloLensLobbyManager : NetworkLobbyManager
     protected ulong _currentMatchID;
 
     protected LobbyHook _lobbyHooks;
+
+    public GameObject countdownView;
 
     void Start()
     {
@@ -155,6 +158,16 @@ public class HoloLensLobbyManager : NetworkLobbyManager
             localPlayerCount += (p == null || p.playerControllerId == -1) ? 0 : 1;
     }
 
+    internal void SetCountdown(int countdown)
+    {
+        if (countdownView == null)
+            return;
+        var countDown = countdownView.GetComponent<ICountdown>();
+        if (countDown == null)
+            return;
+        countDown.SetCountdown(countdown);
+    }
+
     // ----------------- Server callbacks ------------------
 
     //we want to disable the button JOIN if we don't have enough player
@@ -192,6 +205,7 @@ public class HoloLensLobbyManager : NetworkLobbyManager
 
     public override void OnLobbyServerPlayersReady()
     {
+        Debug.Log("OnLobbyServerPlayersReady called");
         bool allready = true;
         for (int i = 0; i < lobbySlots.Length; ++i)
         {
@@ -200,7 +214,11 @@ public class HoloLensLobbyManager : NetworkLobbyManager
         }
 
         if (allready)
+        {
+            Debug.Log("Start server countdown");
+
             StartCoroutine(ServerCountdownCoroutine());
+        }
     }
 
     public IEnumerator ServerCountdownCoroutine()

@@ -153,6 +153,8 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
     [ClientRpc]
     public void RpcUpdateCountdown(int countdown)
     {
+        HoloLensLobbyManager.s_Singleton.SetCountdown(countdown);
+
         //HoloLensLobbyManager.s_Singleton.countdownPanel.UIText.text = "Match Starting in " + countdown;
         //HoloLensLobbyManager.s_Singleton.countdownPanel.gameObject.SetActive(countdown != 0);
     }
