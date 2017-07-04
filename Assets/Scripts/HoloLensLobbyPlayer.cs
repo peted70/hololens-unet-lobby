@@ -77,11 +77,11 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
             CmdNameChanged("Player" + this.netId.ToString());
     }
 
-    //public override void OnClientReady(bool readyState)
-    //{
-    //    base.OnClientReady(readyState);
-    //    statusText.text = readyState ? "Ready" : "Not Ready";
-    //}
+    public override void OnClientReady(bool readyState)
+    {
+        base.OnClientReady(readyState);
+        statusText.text = readyState ? "Ready" : "Not Ready";
+    }
 
     public void OnMyName(string newName)
     {
