@@ -34,35 +34,35 @@ public class HoloLensLobbyPlayer : NetworkLobbyPlayer
     //    SetupLocalPlayer();
     //}
 
-    //public override void OnClientEnterLobby()
-    //{
-    //    base.OnClientEnterLobby();
+    public override void OnClientEnterLobby()
+    {
+        base.OnClientEnterLobby();
 
-    //    PlayerList.instance.AddPlayer(this);
+        //PlayerList.instance.AddPlayer(this);
 
-    //    //var lobbyPlayer = this;
+        //var lobbyPlayer = this;
 
-    //    //// Need to clone the lobby player prefab here at this point..
-    //    //var cn = new ObjectCollection.CollectionNode();
-    //    //cn.transform = lobbyPlayer.transform;
-    //    //lobbyPlayer.transform.parent = playerCollection.transform;
-    //    //playerCollection.NodeList.Add(cn);
-    //    //playerCollection.UpdateCollection();
+        //// Need to clone the lobby player prefab here at this point..
+        //var cn = new ObjectCollection.CollectionNode();
+        //cn.transform = lobbyPlayer.transform;
+        //lobbyPlayer.transform.parent = playerCollection.transform;
+        //playerCollection.NodeList.Add(cn);
+        //playerCollection.UpdateCollection();
 
-    //    if (isLocalPlayer)
-    //    {
-    //        SetupLocalPlayer();
-    //    }
-    //    else
-    //    {
-    //        SetupOtherPlayer();
-    //    }
+        if (isLocalPlayer)
+        {
+            SetupLocalPlayer();
+        }
+        else
+        {
+            SetupOtherPlayer();
+        }
 
-    //    // setup the player data on UI. The value are SyncVar so the player
-    //    // will be created with the right value currently on server
-    //    OnMyName(playerName);
-    //    OnMyColor(playerColor);
-    //}
+        // setup the player data on UI. The value are SyncVar so the player
+        // will be created with the right value currently on server
+        OnMyName(playerName);
+        OnMyColor(playerColor);
+    }
 
     private void SetupOtherPlayer()
     {
