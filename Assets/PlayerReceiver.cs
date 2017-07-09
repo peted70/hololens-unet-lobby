@@ -9,10 +9,13 @@ public class PlayerReceiver : InteractionReceiver
     {
         switch (obj.name)
         {
-            case "Capsule":
+            case "Player(Clone)":
                 {
+                    var ps = obj.GetComponent<HoloLensPlayerScript>();
+                    ps.CmdIdChanged("id " + Random.value);
                     break;
                 }
         }
+        base.OnTapped(obj, eventArgs);
     }
 }
