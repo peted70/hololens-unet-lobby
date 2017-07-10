@@ -1,6 +1,8 @@
 ﻿using HUX.Interaction;
 using HUX.Receivers;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.VR.WSA;
 
 public class CubeReceiver : InteractionReceiver
@@ -11,13 +13,17 @@ public class CubeReceiver : InteractionReceiver
         {
             case "Cube":
                 {
-                    var sharedCollection = Targets[0];
-                    var was = sharedCollection.GetComponent<WorldAnchorScript>();
-                    var wa = was.GetComponent<WorldAnchor>();
-                    if (wa == null)
-                        wa = was.gameObject.AddComponent<WorldAnchor>();
+                    // Find the local player object...
+                    HoloLensPlayerScript localPlayer = new List<HoloLensPlayerScript>(GameObject.FindObjectsOfType<HoloLensPlayerScript>()).Find(player => player.isLocalPlayer);
+                    if (localPlayer != null)
+                    {
+                        var was = localPlayer.gameObject.GetComponent<WorldAnchorScript>();
+                        var wa = obj.GetComponent<WorldAnchor>();
+                        if (wa == null)
+                            wa = obj.AddComponent<WorldAnchor>();
 
-                    was.UploadWorldAnchor(wa);
+                        was.UploadWorldAnchor(wa);
+                    }
                     break;
                 }
         }

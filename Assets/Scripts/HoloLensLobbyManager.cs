@@ -130,6 +130,10 @@ public class HoloLensLobbyManager : NetworkLobbyManager
         netMsg.conn.Disconnect();
     }
 
+    //public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
+    //{
+    //    base.OnServerAddPlayer(conn, playerControllerId);
+    //}
     //===================
 
     public override void OnStartHost()

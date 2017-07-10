@@ -14,6 +14,12 @@ public class HoloLensPlayerScript : NetworkBehaviour
         id = name;
     }
 
+    public override void OnStartClient()
+    {
+        CmdIdChanged(id);
+        base.OnStartClient();
+    }
+
     public void OnId(string newId)
     {
         id = newId;
