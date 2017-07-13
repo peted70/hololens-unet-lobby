@@ -170,7 +170,7 @@ Prefab:
     - target: {fileID: 114693553706264962, guid: 5e7e61ad52d568d4ca087afa39bfc076,
         type: 2}
       propertyPath: m_MinPlayers
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5e7e61ad52d568d4ca087afa39bfc076, type: 2}

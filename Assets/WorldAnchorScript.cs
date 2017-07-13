@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.VR.WSA;
+using UnityEngine.VR.WSA.Persistence;
 using UnityEngine.VR.WSA.Sharing;
 
 public class WorldAnchorScript : NetworkBehaviour
@@ -31,17 +32,25 @@ public class WorldAnchorScript : NetworkBehaviour
 
     internal void UploadWorldAnchor(WorldAnchor wa)
     {
-        // Serialise the world anchor and then send the byte array 
-        // to the server..
-        WorldAnchorTransferBatch transferBatch = new WorldAnchorTransferBatch();
-        transferBatch.AddWorldAnchor("GameRootAnchor", wa);
-        WorldAnchorTransferBatch.ExportAsync(transferBatch, OnExportDataAvailable, OnExportComplete);
+        WorldAnchorMgr.Instance.UploadWorldAnchor(wa, OnExportDataAvailable, OnExportComplete);
     }
 
     public void OnExportComplete(SerializationCompletionReason completionReason)
     {
-        var data = _stream.ToArray();
-        SendWorldAnchor(data);
+        if (completionReason == SerializationCompletionReason.Succeeded)
+        {
+            Debug.Log("Export Complete (succeeded)");
+            var data = _stream.ToArray();
+
+#if WINDOWS_UWP
+            WorldAnchorMgr.Instance.SaveData(data);
+#endif
+            SendWorldAnchor(data);
+        }
+        else
+        {
+            Debug.Log("Export Complete (failure) reason " + completionReason.ToString());
+        }
     }
 
     MemoryStream _stream = new MemoryStream();
@@ -87,17 +96,12 @@ public class WorldAnchorScript : NetworkBehaviour
 
     private void Awake()
     {
-        worldAnchor.Callback = WorldAnchorChanged;    
+        worldAnchor.Callback = WorldAnchorChanged;
     }
 
     private void WorldAnchorChanged(SyncList<MyStruct>.Operation op, int itemIndex)
     {
-        // If we 
-        //if (_sendingWorldAnchor)
-        //{
-        //    _sendingWorldAnchor = false;
-        //    return;
-        //}
+        Debug.Log("World anchor Changed" + this.netId.ToString());
 
         var txt = gameObject.transform.Find("Text");
         var tm = txt.GetComponent<TextMesh>();
@@ -108,6 +112,17 @@ public class WorldAnchorScript : NetworkBehaviour
             sz += data.data.Length;
         }
         tm.text = sz.ToString();
+
+        // Recontruct the anchor data..
+        byte[] anchorData = new byte[sz];
+        int offset = 0;
+        foreach (var data in worldAnchor)
+        {
+            Buffer.BlockCopy(data.data, 0, anchorData, offset, data.data.Length);
+            offset += data.data.Length;
+        }
+
+        WorldAnchorMgr.Instance.ImportAsync(anchorData);
     }
 
     [Serializable]
@@ -133,10 +148,11 @@ public class WorldAnchorScript : NetworkBehaviour
         worldAnchor.Add(data);
         worldAnchor.Dirty(worldAnchor.Count - 1);
 
-        //if (seqId == -1)
-        //{
+        //WorldAnchorStore.Load("MyWorldAnchor", );
+        if (seqId == -1)
+        {
+            //WorldAnchorStore.Save("MyAnchor", )
         //    PrintSyncData(worldAnchor4);
-        //}
+        }
     }
-
 }

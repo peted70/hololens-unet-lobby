@@ -168,6 +168,21 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2effafb42a9bcdd4aafef7457b6efe67, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &50008938 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100002, guid: 2effafb42a9bcdd4aafef7457b6efe67, type: 2}
+  m_PrefabInternal: {fileID: 50008937}
+--- !u!114 &50008939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 50008938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91b6da101db6e584bb4105c82513e494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &500444740
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +416,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1771914983}
   - component: {fileID: 1771914982}
-  - component: {fileID: 1771914984}
   - component: {fileID: 1771914985}
   m_Layer: 0
   m_Name: SharedCollection
@@ -441,17 +455,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1771914984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1771914981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abbabd4ab704de04c8253e0c6780e46d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1771914985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,7 +486,7 @@ MonoBehaviour:
     i14: 0
     i15: 0
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_LocalPlayerAuthority: 0
 --- !u!1 &1880855512
 GameObject:
   m_ObjectHideFlags: 0

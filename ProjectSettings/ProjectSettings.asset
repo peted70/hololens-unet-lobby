@@ -545,7 +545,7 @@ PlayerSettings:
       MusicLibrary: False
       Objects3D: False
       PhoneCall: False
-      PicturesLibrary: False
+      PicturesLibrary: True
       PrivateNetworkClientServer: True
       Proximity: True
       RemovableStorage: False
