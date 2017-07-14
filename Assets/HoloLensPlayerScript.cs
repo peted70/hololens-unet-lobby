@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.Networking;
 
 public class HoloLensPlayerScript : NetworkBehaviour
@@ -8,6 +9,38 @@ public class HoloLensPlayerScript : NetworkBehaviour
 
     [SyncVar]
     public Quaternion rotation;
+    private Color _playerColour;
+
+    public Color PlayerColour
+    {
+        get { return _playerColour; }
+        set
+        {
+            if (_playerColour != value)
+            {
+                _playerColour = value;
+                SetDeviceColour(_playerColour);
+            }
+        }
+    }
+
+    private void SetDeviceColour(Color playerColour)
+    {
+        // change the tint colour of the HoloLens models visor
+        var deviceGo = gameObject.GetComponentsInChildren<Transform>();
+        var device = deviceGo.Where(t => t.name == "hololens").Single() as Transform;
+        var mr = device.GetComponents<MeshRenderer>();
+        foreach (var mat in mr[0].materials)
+        {
+            if (mat.name.Contains("glass"))
+            {
+                mat.color = playerColour;
+                break;
+            }
+        }
+    }
+
+    public string PlayerName { get; internal set; }
 
     public override void OnStartClient()
     {
