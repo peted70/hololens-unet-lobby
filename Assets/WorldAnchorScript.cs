@@ -135,7 +135,7 @@ public class WorldAnchorScript : NetworkBehaviour
     public SyncListWorldAnchor worldAnchor = new SyncListWorldAnchor();
     private bool _sendingWorldAnchor;
 
-    [Command]
+    [Command(channel = 2)]
     private void CmdSendData(byte[] bytes, int seqId)
     {
         Debug.Log("Transfer scipt CmdSendData");

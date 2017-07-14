@@ -13,6 +13,7 @@ using System.IO;
 
 public class WorldAnchorMgr : Singleton<WorldAnchorMgr>
 {
+    public GameObject rootSharedObject;
     public static WorldAnchorStore WorldAnchorStore;
 
     private static void WorldAnchorStoreReady(WorldAnchorStore store)
@@ -54,7 +55,9 @@ public class WorldAnchorMgr : Singleton<WorldAnchorMgr>
                 string first = wat.GetAllIds()[0];
                 Debug.Log("Anchor name: " + first);
 
-                WorldAnchor anchor = wat.LockObject(first, gameObject);
+                WorldAnchor anchor = wat.LockObject(first, rootSharedObject);
+                rootSharedObject.transform.position += anchor.transform.position;
+                
                 Debug.Log("Game Object " + gameObject.name + " locked with world anchor " + anchor != null ? anchor.name : "NULL");
 
                 if (WorldAnchorStore != null)
@@ -68,16 +71,29 @@ public class WorldAnchorMgr : Singleton<WorldAnchorMgr>
     }
 
 #if WINDOWS_UWP
+    bool _import;
+    byte[] _anchorData;
+
     public async Task ImportWorldAnchorFromDisk()
     {
         Debug.Log("Reading World Anchor from file...");
 
-        var anchorData = await LoadDataAsync();
-        Debug.Log("Read World Anchor size - " + anchorData.Length);
+        _anchorData = await LoadDataAsync();
+        Debug.Log("Read World Anchor size - " + _anchorData.Length);
 
         Debug.Log("Importing World Anchor...");
-        // Import the world anchor...
-        WorldAnchorTransferBatch.ImportAsync(anchorData, OnImportComplete);
+
+        _import = true;
+    }
+
+    private void Update()
+    {
+        if (_import)
+        {
+            // Import the world anchor...
+            WorldAnchorTransferBatch.ImportAsync(_anchorData, OnImportComplete);
+            _import = false;
+        }
     }
 
     const string AnchorFilename = "anchors.dat";

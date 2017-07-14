@@ -18,16 +18,19 @@ public class CubeReceiver : InteractionReceiver
                     if (scripts == null)
                         Debug.Log("Scripts is null");
                     HoloLensPlayerScript localPlayer = new List<HoloLensPlayerScript>(scripts).Find(player => player.isLocalPlayer);
-                    if (localPlayer != null)
-                    {
+                    //if (localPlayer != null)
+                    //{
+                    var sharedCollection = GameObject.Find("SharedCollection");
+                    if (sharedCollection && localPlayer)
+                    { 
 #if WINDOWS_UWP
                         WorldAnchorMgr.Instance.ImportWorldAnchorFromDisk();
                         break;
 #endif
-                        var was = localPlayer.gameObject.GetComponent<WorldAnchorScript>();
-                        var wa = obj.GetComponent<WorldAnchor>();
+                        var was = localPlayer.GetComponent<WorldAnchorScript>();
+                        var wa = sharedCollection.GetComponent<WorldAnchor>();
                         if (wa == null)
-                            wa = obj.AddComponent<WorldAnchor>();
+                            wa = sharedCollection.AddComponent<WorldAnchor>();
                         was.UploadWorldAnchor(wa);
                     }
                     break;

@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 54368523585934144}
   - component: {fileID: 114073891222300454}
   - component: {fileID: 114682188824682614}
-  - component: {fileID: 114861153168410034}
+  - component: {fileID: 114721090067350444}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -462,7 +462,7 @@ MonoBehaviour:
   - {fileID: 1385009059752968}
   Targets: []
   bLockFocus: 0
---- !u!114 &114861153168410034
+--- !u!114 &114721090067350444
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
