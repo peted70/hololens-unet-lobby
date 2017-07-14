@@ -1,30 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 
 public class HoloLensPlayerScript : NetworkBehaviour
 {
-    [SyncVar(hook ="OnId")]
-    public string id;
+    [SyncVar]
+    public Vector3 position;
 
-    [Command]
-    public void CmdIdChanged(string name)
-    {
-        id = name;
-    }
+    [SyncVar]
+    public Quaternion rotation;
 
     public override void OnStartClient()
     {
-        CmdIdChanged(id);
+        CmdPositionRotationChanged(position, rotation);
         base.OnStartClient();
     }
 
-    public void OnId(string newId)
+    [Command]
+    private void CmdPositionRotationChanged(Vector3 inpos, Quaternion inrot)
     {
-        id = newId;
-        var label = gameObject.transform.Find("Label");
-        var tm = label.GetComponent<TextMesh>();
-        tm.text = newId;
+        position = inpos;
+        rotation = inrot;
+    }
+
+    private void Update()
+    {
+        if (isLocalPlayer)
+        {
+            // probably want to set our own position as well..
+            CmdPositionRotationChanged(Camera.main.transform.position, Camera.main.transform.rotation);
+        }
+        else
+        {
+            transform.position = position;
+            transform.localRotation = rotation;
+        }
     }
 }

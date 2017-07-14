@@ -11,8 +11,8 @@ public class PlayerReceiver : InteractionReceiver
         {
             case "Player(Clone)":
                 {
-                    var ps = obj.GetComponent<HoloLensPlayerScript>();
-                    ps.CmdIdChanged("id " + Random.value);
+                    //var ps = obj.GetComponent<HoloLensPlayerScript>();
+                    //ps.CmdIdChanged("id " + Random.value);
                     break;
                 }
         }
