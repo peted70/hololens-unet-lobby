@@ -33,7 +33,7 @@ public class Receivers : InteractionReceiver
             case "ClientButton":
                 {
                     var trgt = Targets[0].GetComponent<HoloLensLobbyManager>();
-                    trgt.networkAddress = "192.168.0.10";// "192.168.0.10"; //ipInput.text;
+                    trgt.networkAddress = "192.168.0.18";// "192.168.0.10"; //ipInput.text;
                     trgt.networkPort = 7777;
 
                     var nc = trgt.StartClient();

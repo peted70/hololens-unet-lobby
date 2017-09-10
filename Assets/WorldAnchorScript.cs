@@ -1,13 +1,20 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.VR.WSA;
-using UnityEngine.VR.WSA.Persistence;
 using UnityEngine.VR.WSA.Sharing;
 
 public class WorldAnchorScript : NetworkBehaviour
 {
+    [Serializable]
+    public struct MyStruct
+    {
+        public byte[] data;
+        public int seqId;
+    }
+
     public class SyncListWorldAnchor : SyncListStruct<MyStruct>
     {
         protected override MyStruct DeserializeItem(NetworkReader reader)
@@ -15,6 +22,7 @@ public class WorldAnchorScript : NetworkBehaviour
             MyStruct ret;
             uint sz = reader.ReadPackedUInt32();
             ret.data = reader.ReadBytes((int)sz);
+            ret.seqId = reader.ReadInt32();
             return ret;
         }
 
@@ -24,11 +32,13 @@ public class WorldAnchorScript : NetworkBehaviour
             // stream to read is somehow packed out with zeros and I couldn't figure out why).
             writer.WritePackedUInt32((uint)item.data.Length);
             writer.Write(item.data, item.data.Length);
-            writer.FinishMessage();
+            writer.Write(item.seqId);
         }
     }
 
     private byte[] _anchorData;
+    public SyncListWorldAnchor _anchor = new SyncListWorldAnchor();
+    bool IsSender;
 
     internal void UploadWorldAnchor(WorldAnchor wa)
     {
@@ -39,17 +49,19 @@ public class WorldAnchorScript : NetworkBehaviour
     {
         if (completionReason == SerializationCompletionReason.Succeeded)
         {
-            Debug.Log("Export Complete (succeeded)");
+            Logger.Log("Export Complete (succeeded)");
+
             var data = _stream.ToArray();
 
 #if WINDOWS_UWP
             WorldAnchorMgr.Instance.SaveData(data);
 #endif
-            SendWorldAnchor(data);
+            IsSender = true;
+            SendAnchor(data);
         }
         else
         {
-            Debug.Log("Export Complete (failure) reason " + completionReason.ToString());
+            Logger.Log("Export Complete (failure) reason " + completionReason.ToString());
         }
     }
 
@@ -59,100 +71,86 @@ public class WorldAnchorScript : NetworkBehaviour
     private void OnExportDataAvailable(byte[] data)
     {
         // buffer up the data..
-        _stream.Write(data, 0, data.Length);
+        _stream.Write(data, _offset, data.Length);
         _offset += data.Length;
     }
 
-    public void SendWorldAnchor(byte[] anchorData)
+    // Using NetworkManager.singleton.connectionConfig.PacketSize currently
+    const int BLOCKSIZE = 128;
+
+    private void SendAnchor(byte[] bytes)
     {
-        int numBytes = anchorData.Length;
-
+        int numBytes = bytes.Length;
+        int seqId = 0, offset = 0;
         int maxBytes = NetworkManager.singleton.connectionConfig.PacketSize;
-        int seqId = 0;
-
-        var bytes = new byte[maxBytes];
-        int offset = 0;
-        _sendingWorldAnchor = true;
+        var buffer = new byte[maxBytes];
 
         while (numBytes > maxBytes)
         {
-            Buffer.BlockCopy(anchorData, offset, bytes, 0, maxBytes);
-            offset += maxBytes;
-            numBytes -= maxBytes;
-
-            CmdSendData(bytes, seqId);
+            Buffer.BlockCopy(bytes, offset, buffer, 0, BLOCKSIZE);
+            offset += BLOCKSIZE;
+            numBytes -= BLOCKSIZE;
+            CmdSendAnchorBlock(bytes, seqId);
             seqId++;
         }
-
-        // Do we have any bytes left to send?
         if (numBytes > 0)
         {
-            Buffer.BlockCopy(anchorData, offset, bytes, 0, numBytes);
-
+            Buffer.BlockCopy(bytes, offset, buffer, 0, numBytes);
             // Use -1 to signal the end of the data..
-            CmdSendData(bytes, -1);
+            CmdSendAnchorBlock(bytes, -1);
         }
+    }
+
+    [Command]
+    private void CmdSendAnchorBlock(byte[] bytes, int seqId)
+    {
+        MyStruct data;
+        data.data = bytes;
+        data.seqId = seqId;
+        _anchor.Add(data);
+        Debug.Log("added block " + _anchor.Count + " " + netId);
     }
 
     private void Awake()
     {
-        worldAnchor.Callback = WorldAnchorChanged;
+        _anchor.Callback = AnchorChanged;
     }
 
-    private void WorldAnchorChanged(SyncList<MyStruct>.Operation op, int itemIndex)
+    private void AnchorChanged(SyncList<MyStruct>.Operation op, int itemIndex)
     {
-        Debug.Log("World anchor Changed" + this.netId.ToString());
+        Debug.Log("received block " + itemIndex.ToString() + " " + netId);
 
-        var txt = gameObject.transform.Find("Text");
-        var tm = txt.GetComponent<TextMesh>();
-
-        int sz = 0;
-        foreach (var data in worldAnchor)
-        {
-            sz += data.data.Length;
-        }
-        tm.text = sz.ToString();
-
-        // Recontruct the anchor data..
-        byte[] anchorData = new byte[sz];
-        int offset = 0;
-        foreach (var data in worldAnchor)
-        {
-            Buffer.BlockCopy(data.data, 0, anchorData, offset, data.data.Length);
-            offset += data.data.Length;
-        }
-
-        WorldAnchorMgr.Instance.ImportAsync(anchorData);
+        // Reconstruct the anchor data... - detect when the whole thing has been sent..
+        UpdateAnchor();
     }
 
-    [Serializable]
-    public struct MyStruct
+    private void UpdateAnchor()
     {
-        public byte[] data;
-    }
-
-    MemoryStream ms;
-    public SyncListWorldAnchor worldAnchor = new SyncListWorldAnchor();
-    private bool _sendingWorldAnchor;
-
-    [Command(channel = 2)]
-    private void CmdSendData(byte[] bytes, int seqId)
-    {
-        Debug.Log("Transfer scipt CmdSendData");
-
-        if (ms == null)
-            ms = new MemoryStream();
-
-        MyStruct data;
-        data.data = bytes;
-        worldAnchor.Add(data);
-        worldAnchor.Dirty(worldAnchor.Count - 1);
-
-        //WorldAnchorStore.Load("MyWorldAnchor", );
-        if (seqId == -1)
+        if (_anchor[_anchor.Count - 1].seqId == -1)
         {
-            //WorldAnchorStore.Save("MyAnchor", )
-        //    PrintSyncData(worldAnchor4);
+            // If we sent the anchor, we don't need to import it as we define the coord
+            // system..
+            //
+            if (IsSender == true)
+                return;
+
+            // put all of the array elements back into one blob..
+            Debug.Log("detected last block");
+
+            int sz = _anchor.Sum(b => b.data.Length);
+            if (sz <= 0)
+                return;
+
+            // Recontruct the anchor data..
+            byte[] anchorData = new byte[sz];
+            int offset = 0;
+            foreach (var block in _anchor)
+            {
+                Buffer.BlockCopy(block.data, 0, anchorData, offset, block.data.Length);
+                offset += block.data.Length;
+            }
+
+            WorldAnchorMgr.Instance.ImportAsync(anchorData);
         }
     }
 }

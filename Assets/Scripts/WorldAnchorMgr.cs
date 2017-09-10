@@ -48,17 +48,17 @@ public class WorldAnchorMgr : Singleton<WorldAnchorMgr>
     {
         if (completionReason == SerializationCompletionReason.Succeeded)
         {
-            Debug.Log("World Anchor Import Complete (succeeded)");
+            Logger.Log("World Anchor Import Complete (succeeded)");
 
             if (wat.GetAllIds().Length > 0)
             {
                 string first = wat.GetAllIds()[0];
-                Debug.Log("Anchor name: " + first);
+                Logger.Log("Anchor name: " + first);
 
                 WorldAnchor anchor = wat.LockObject(first, rootSharedObject);
                 rootSharedObject.transform.position += anchor.transform.position;
                 
-                Debug.Log("Game Object " + gameObject.name + " locked with world anchor " + anchor != null ? anchor.name : "NULL");
+                Logger.Log("Game Object " + gameObject.name + " locked with world anchor " + anchor != null ? anchor.name : "NULL");
 
                 if (WorldAnchorStore != null)
                     WorldAnchorStore.Save(first, anchor);
@@ -66,7 +66,7 @@ public class WorldAnchorMgr : Singleton<WorldAnchorMgr>
         }
         else
         {
-            Debug.Log("World Anchor Import Failed - reason " + completionReason);
+            Logger.Log("World Anchor Import Failed - reason " + completionReason);
         }
     }
 

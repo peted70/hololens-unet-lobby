@@ -24,13 +24,14 @@ public class CubeReceiver : InteractionReceiver
                     if (sharedCollection && localPlayer)
                     { 
 #if WINDOWS_UWP
-                        WorldAnchorMgr.Instance.ImportWorldAnchorFromDisk();
-                        break;
+                        //WorldAnchorMgr.Instance.ImportWorldAnchorFromDisk();
+                        //break;
 #endif
                         var was = localPlayer.GetComponent<WorldAnchorScript>();
                         var wa = sharedCollection.GetComponent<WorldAnchor>();
                         if (wa == null)
                             wa = sharedCollection.AddComponent<WorldAnchor>();
+                        Logger.Log("About to upload world anchor");
                         was.UploadWorldAnchor(wa);
                     }
                     break;
